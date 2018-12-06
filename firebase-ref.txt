@@ -1,0 +1,131 @@
+1. Initializing firebase
+
+    import * as firebase from "firebase";
+
+    const config = {
+    apiKey: "AIzaSyCvuhQpcAznieJSkUFjtlZGcABuvX-dutk",
+    authDomain: "react-forms-7d610.firebaseapp.com",
+    databaseURL: "https://react-forms-7d610.firebaseio.com",
+    projectId: "react-forms-7d610",
+    storageBucket: "react-forms-7d610.appspot.com",
+    messagingSenderId: "790164020698"
+    };
+    firebase.initializeApp(config);
+
+2. Posting Data
+
+    firebase
+    .database()
+    .ref()
+    .set({
+        name: "name -1",
+        lname: "lname -2",
+        age: 40,
+        skills : {
+            key1: "skill-1",
+            key2: "skill-2"
+        }
+    });
+
+    // Add sub item
+
+    firebase
+    .database()
+    .ref("skills")
+    .set({
+        key11: "skill-11",
+        key21: "skill-21"
+    });
+
+    set() returns promises
+
+    firebase
+    .database()
+    .ref("skills")
+    .set({
+        key11: "skill-11",
+        key21: "skill-21"
+    })
+    .then(() => console.log("Added value"))
+    .catch(err => console.log(err));
+
+3. Remove data
+
+    firebase
+    .database()
+    .ref("skills")
+    .remove()
+    .then(() => console.log("Removed value"))
+    .catch(err => console.log(err));
+
+4. Update data
+
+    firebase
+    .database()
+    .ref("skills")
+    .update({
+        key11: "skill-11",
+        key21: "skill-21"
+    })
+    .then(() => console.log("Update value"))
+    .catch(err => console.log(err));
+
+    firebase
+    .database()
+    .ref("skills")
+    .update({
+         name: "name -1",
+         "skills/key1": "Value 100"
+    })
+    .then(() => console.log("Update value"))
+    .catch(err => console.log(err));
+
+5. Get data
+
+    firebase
+    .database()
+    .ref()
+    .once("value")
+    .then((snapshot) => console.log(snapshot.val()))
+    .catch(err => console.log(err));
+
+    // on - always listen to the changes
+    firebase
+    .database()
+    .ref()
+    .on("value", (snapshot) => console.log(snapshot.val()))    
+
+    firebase
+    .database()
+    .ref()
+    .on("child_removed", (snapshot) => console.log(snapshot.val())) 
+
+    firebase
+    .database()
+    .ref()
+    .on("child_changed", (snapshot) => console.log(snapshot.val())) 
+
+    firebase
+    .database()
+    .ref()
+    .on("child_added", (snapshot) => console.log(snapshot.val())) 
+
+6. Arrays of data. Firebase adds key of each object
+     firebase
+    .database()
+    .ref()
+    .push({
+        name: "name -1",
+        lname: "lname -2"
+    })
+
+7. Query methods
+
+    firebase
+    .database()
+    .ref()
+    .orderByChild("age")
+    .limitToFirst(1)
+    .once("value")
+    .then((snapshot) => console.log(snapshot.val()))
+    .catch(err => console.log(err));

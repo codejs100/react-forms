@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import FormElement from "./Widgets/Form/formelement";
+import { firebaseDb } from "./../firebase";
 
 class User extends Component {
   state = {
@@ -99,6 +100,7 @@ class User extends Component {
     }
     if (formValid) {
       console.log(data);
+      firebaseDb.ref("users").push(data);
     }
   };
 
